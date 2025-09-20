@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西藏那曲地区 - 旅游指南</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background: url('https://ts1.tc.mm.bing.net/th/id/R-C.a87383e008171f37c7c6a97ed28c7bc8?rik=%2fD9MF6RVYD21Hw&riu=http%3a%2f%2flvyou.ycwb.com%2fpic%2f2019-05%2f08%2ff7dbb397-6b65-4a93-857d-43ca2bc62fe0.jpg&ehk=IJt%2f6KcOUSlzztcM2FEkv3tlFM4tgrH3O7m7kvFni98%3d&risl=&pid=ImgRaw&r=0') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* 图片容器样式 */
+        .image-container {
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .content-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            padding: 10px 15px;
+            background-color: #f8f9fa;
+            font-size: 14px;
+            color: #7f8c8d;
+            text-align: center;
+        }
+
+        /* 退出登录按钮样式 */
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 15px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            z-index: 100;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 论坛样式 */
+        .forum-container {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: -3px 0 15px rgba(0, 0, 0, 0.2);
+            transition: right 0.5s ease;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .forum-container.active {
+            right: 0;
+        }
+
+        .forum-toggle {
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 60px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px 0 0 8px;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .forum-toggle:hover {
+            background-color: #2980b9;
+        }
+
+        .forum-toggle.active {
+            left: -30px;
+        }
+
+        .forum-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            background-color: #f8f9fa;
+        }
+
+        .forum-title {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .forum-subtitle {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .forum-content {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .forum-posts {
+            margin-bottom: 20px;
+        }
+
+        .post-item {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .post-author {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .post-time {
+            color: #95a5a6;
+            font-size: 12px;
+        }
+
+        .post-content {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .forum-form {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            background-color: #f8f9fa;
+        }
+
+        .forum-form h4 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .forum-textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            resize: none;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+
+        .forum-submit {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            float: right;
+        }
+
+        .forum-submit:hover {
+            background-color: #2980b9;
+        }
+
+        .forum-permission {
+            padding: 20px;
+            text-align: center;
+            color: #7f8c8d;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .forum-permission i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+        }
+
+        /* 登录界面样式 */
+        .login-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+
+        .login-box {
+            background-color: #fff;
+            width: 90%;
+            max-width: 450px;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-size: 24px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .form-group input {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .verify-code-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .verify-code-group input {
+            flex: 1;
+        }
+
+        .get-code-btn {
+            padding: 12px 15px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .get-code-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .login-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .phone-login-btn {
+            padding: 12px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        .tourist-login-btn {
+            padding: 12px;
+            background-color: #f39c12;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        .phone-login-btn:hover,
+        .tourist-login-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 主内容样式 */
+        .main-content {
+            display: none;
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .module-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .module-btn {
+            padding: 20px 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            font-size: 18px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .module-btn:hover, .module-btn.active {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+        }
+
+        /* 模块内容样式 */
+        .module-content {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            display: none;
+        }
+
+        .module-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-title {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 28px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .sub-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .sub-btn {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sub-btn:hover, .sub-btn.active {
+            background-color: #2980b9;
+        }
+
+        .sub-content {
+            display: none;
+            line-height: 1.8;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .sub-content.active {
+            display: block;
+        }
+
+        .tibetan-text {
+            color: #8e44ad;
+            cursor: pointer;
+            text-decoration: underline;
+            margin: 0 5px;
+            position: relative;
+            padding: 0 3px;
+        }
+
+        .tibetan-text:hover {
+            color: #9b59b6;
+            background-color: rgba(155, 89, 182, 0.1);
+            border-radius: 3px;
+        }
+
+        .tibetan-text::after {
+            content: "🔊";
+            font-size: 0.8em;
+            margin-left: 3px;
+        }
+
+        /* 交通方式样式 */
+        .transport-method {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .transport-method:last-child {
+            border-bottom: none;
+        }
+
+        .transport-title {
+            color: #2980b9;
+            margin-bottom: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .transport-title i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .transport-details {
+            margin-left: 30px;
+        }
+
+        .transport-details p {
+            margin-bottom: 10px;
+        }
+
+        .transport-details ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .transport-details li {
+            margin-bottom: 5px;
+        }
+
+        /* 响应式样式 */
+        @media (max-width: 768px) {
+            .module-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .module-btn {
+                width: 80%;
+            }
+
+            .forum-container {
+                width: 100%;
+                right: -100%;
+            }
+
+            .transport-details {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 登录界面 -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h2 class="login-title">欢迎进入那曲旅游指南</h2>
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="phoneNumber">手机号</label>
+                    <input type="tel" id="phoneNumber" placeholder="请输入手机号" pattern="1[3-9]\d{9}">
+                </div>
+                <div class="form-group verify-code-group">
+                    <input type="text" id="verifyCode" placeholder="请输入验证码">
+                    <button class="get-code-btn" id="getCodeBtn">获取验证码</button>
+                </div>
+                <div class="login-btns">
+                    <button class="phone-login-btn" id="phoneLoginBtn">手机号登录</button>
+                    <button class="tourist-login-btn" id="touristLoginBtn">游客登录</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="main-content" id="mainContent">
+        <!-- 退出登录按钮 -->
+        <button class="logout-btn" id="logoutBtn">退出登录</button>
+        
+        <div class="module-buttons">
+            <button class="module-btn active" data-module="intro">那曲地区介绍</button>
+            <button class="module-btn" data-module="travel">那曲旅游攻略</button>
+            <button class="module-btn" data-module="notice">那曲旅游注意事项</button>
+        </div>
+
+        <!-- 地区介绍模块 -->
+        <div class="module-content active" id="introModule">
+            <h3 class="content-title">那曲地区介绍 <span class="tibetan-text=yes">ནག་ཆུ་ས་ཁུལ་</span></h3>
+            <div class="sub-buttons">
+                <button class="sub-btn active" data-module="intro" data-sub="geography">地理环境</button>
+                <button class="sub-btn" data-module="intro" data-sub="history">历史文化</button>
+                <button class="sub-btn" data-module="intro" data-sub="ethnic">民族风情</button>
+                <button class="sub-btn" data-module="intro" data-sub="resources">自然资源</button>
+            </div>
+            <div class="sub-contents">
+                <div class="sub-content active" id="intro-geography">
+                    <h4>地理环境 <span class="tibetan-text=yes">ས་ཡིག་སྲིད་</span></h4>
+                    
+                    <div class="image-container">
+                        <img src="https://picsum.photos/id/29/1200/500" alt="那曲高原地理风光" class="content-image">
+                        <div class="image-caption">那曲高原壮丽的地理景观，远处可见念青唐古拉山脉</div>
+                    </div>
+                    
+                    <p>那曲市地处西藏自治区北部，唐古拉山脉、念青唐古拉山脉和冈底斯山脉之间，平均海拔4500米以上，素有“世界屋脊的屋脊”之称。那曲市东连昌都市，西接阿里地区，南与拉萨市、日喀则市、林芝市相邻，北与新疆维吾尔自治区、青海省接壤，是西藏面积最大的地级市，总面积达369674平方千米。</p>
+                    
+                    <p>那曲地形以高原丘陵和山地为主，地势西高东低，中西部地形辽阔平坦，多湖泊、盆地；东部为河谷地带，多高山峡谷。境内主要河流有怒江、澜沧江、雅鲁藏布江等，主要湖泊有纳木错、色林错、当惹雍错等著名高原湖泊，其中纳木错是西藏三大圣湖之一，也是世界上海拔最高的咸水湖。</p>
+                    
+                    <div class="image-container">
+                        <img src="https://imgtu.com/uploads/s9t3fnxw/r-20250917192352_29_33.webp" alt="那曲湖泊景观" class="content-image">
+                        <div class="image-caption">那曲地区的高原湖泊，湖水清澈见底，倒映着蓝天白云</div>
+                    </div>
+                    
+                    <p>气候方面，那曲属于高原亚寒带季风半干旱气候，年平均气温-2℃左右，年降水量约200-400毫米，昼夜温差大，多大风、冰雹等天气。冬季寒冷漫长，夏季凉爽短促，无绝对无霜期，适宜牧草生长，是西藏主要的畜牧业产区之一。</p>
+                </div>
+                <div class="sub-content" id="intro-history">
+                    <h4>历史文化 <span class="tibetan-text=yes">ལོ་རྒྱུས་རིགས་</span></h4>
+                    
+                    <div class="image-container">
+                        <img src="https://ts1.tc.mm.bing.net/th/id/R-C.91753231bec4526f6419480a00c28aab?rik=ANNFOnZkAl7AuQ&riu=http%3a%2f%2fstatic.jstv.com%2fgather%2fhl_dp%2f20190817%2f7%2f2261473571507417419.jpg&ehk=i%2foi0BZs5TIcYtQzN%2bvmMtJRmg6MBuJnacPsRjjh8es%3d&risl=&pid=ImgRaw&r=0" alt="那曲历史文化遗迹" class="content-image">
+                        <div class="image-caption">那曲地区的古代岩画，记录了早期藏族先民的生活场景</div>
+                    </div>
+                    
+                    <p>那曲历史悠久，早在旧石器时代就有人类在此活动。在吐蕃王朝时期，那曲地区是苏毗部落的活动区域，后被吐蕃征服，纳入吐蕃王朝版图。元朝时期，那曲地区归入乌思藏纳里速古鲁孙等三路宣慰使司都元帅府管辖，正式纳入中央政府行政管辖范围。</p>
+                    
+                    <p>明清时期，那曲地区分别由西藏地方政府和清朝驻藏大臣管辖，形成了以部落为基础的行政管理制度。1951年西藏和平解放后，那曲地区逐步建立了现代行政体系，1965年成立那曲专区，1970年改为那曲地区，2017年撤地设市，成立那曲市，成为西藏第六个地级市。</p>
+                    
+                    <div class="image-container">
+                        <img src="https://ts1.tc.mm.bing.net/th/id/R-C.13144181428acf037a7c57799c5e915f?rik=oanCVGAq4Y2liw&riu=http%3a%2f%2fstatic.jstv.com%2fgather%2fhl_dp%2f20190618%2f52%2f9496280695064925568.png&ehk=xdUfVZ11v2a6IGOVihuxw4oosNburAVOn265lSiK2yQ%3d&risl=&pid=ImgRaw&r=0" alt="格萨尔说唱艺术" class="content-image">
+                        <div class="image-caption">那曲地区的格萨尔说唱艺人，传承着世界非物质文化遗产</div>
+                    </div>
+                    
+                    <p>那曲文化底蕴深厚，是藏北草原文化的核心区域，拥有丰富的非物质文化遗产，如那曲锅庄、藏北民歌、格萨尔说唱等。其中，格萨尔说唱是世界非物质文化遗产，在那曲地区有着广泛的传承和影响，许多民间艺人至今仍在传唱这部英雄史诗。</p>
+                </div>
+                <div class="sub-content" id="intro-ethnic">
+                    <h4>民族风情 <span class="tibetan-text=yes">མི་རིགས་རིགས་</span></h4>
+                    
+                    <div class="image-container">
+                        <img src="https://img.alicdn.com/bao/uploaded/i3/216791249/O1CN01T3wMAi1L65XDTK5hE_!!216791249.jpg" alt="那曲藏族服饰" class="content-image">
+                        <div class="image-caption">那曲地区传统藏族服饰，色彩鲜艳，具有浓郁的民族特色</div>
+                    </div>
+                    
+                    <p>那曲市是一个以藏族为主体的多民族聚居区，藏族人口占总人口的98%以上，此外还有汉、回、蒙古等民族。藏族人民在长期的生产生活中形成了独特的民族风情，其服饰、饮食、节日、宗教信仰等都具有鲜明的藏北特色。</p>
+                    
+                    <p>服饰方面，那曲藏族传统服饰以羊皮、牛皮为主要原料，具有保暖、防风的特点。男子通常穿着藏袍，腰系腰带，头戴皮帽；女子则穿着色彩鲜艳的藏裙，佩戴银饰、玛瑙等饰品。饮食上，那曲藏族以糌粑、酥油茶、牦牛肉、羊肉为主要食物，其中酥油茶是日常生活中不可或缺的饮品，具有提神、抗寒的功效。</p>
+                    
+                    <div class="image-container">
+                        <img src="https://ts1.tc.mm.bing.net/th/id/OIP-C.E8_loqK3hWI9bWvJq9BfTgHaFb?rs=1&pid=ImgDetMain&o=7&rm=3" alt="那曲赛马节" class="content-image">
+                        <div class="image-caption">那曲赛马节盛况，牧民们身着盛装参加这一传统节日</div>
+                    </div>
+                    
+                    <p>节日方面，那曲地区的传统节日众多，如藏历新年、雪顿节、望果节等。其中，那曲赛马节是藏北最具代表性的节日，每年夏季在那曲镇举行，为期5-7天。节日期间，牧民们身着盛装，骑着骏马参加赛马、射箭、拔河等活动，同时还会举行物资交流、文艺表演等活动，场面盛大热闹。</p>
+                </div>
+                <div class="sub-content" id="intro-resources">
+                    <h4>自然资源 <span class="tibetan-text=yes">རིགས་སྒྲིག་ནང་</span></h4>
+                    
+                    <div class="image-container">
+                        <img src="https://imgtu.com/uploads/s9sg1vj7/r-file_97128d.webp" alt="那曲草原风光" class="content-image">
+                        <div class="image-caption">那曲广阔的草原，是西藏重要的畜牧业基地</div>
+                    </div>
+                    
+                    <p>那曲地区自然资源丰富，涵盖矿产资源、水资源、生物资源等多个领域。矿产资源方面，那曲已发现的矿产有煤、铁、铜、铅、锌、金、银、锂、硼等多种，其中锂、硼等稀有金属矿产储量丰富，具有较高的开发价值。</p>
+                    
+                    <p>水资源方面，那曲地区是西藏重要的水源涵养地，境内河流、湖泊众多，水资源总量达432亿立方米。主要河流有怒江、澜沧江、雅鲁藏布江等，这些河流不仅是当地生产生活用水的重要来源，也为下游地区提供了丰富的水资源。</p>
+                    
+                    <div class="image-container">
+                        <img src="https://m.xizangribao.com/zh/pic/2024-06/17/6196710_fa48bba5-ab9a-4ec9-90bd-e3c05572c2c3.jpg" alt="那曲野生动物" class="content-image">
+                        <div class="image-caption">那曲地区的藏羚羊，是国家一级保护动物</div>
+                    </div>
+                    
+                    <p>生物资源方面，那曲地区拥有丰富的动植物资源。草原面积广阔，是西藏主要的畜牧业基地，主要饲养牦牛、藏绵羊、藏山羊等。野生动物种类繁多，有藏羚羊、野牦牛、藏野驴、雪豹等国家一级保护动物，还有黑颈鹤、藏雪鸡等珍稀鸟类。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 旅游攻略模块 -->
+        <div class="module-content" id="travelModule">
+            <h3 class="content-title">那曲旅游攻略 <span class="tibetan-text=yes">ནག་ཆུ་ལམ་སྲིད་</span></h3>
+            <div class="sub-buttons">
+                <button class="sub-btn active" data-module="travel" data-sub="time">最佳旅游时间</button>
+                <button class="sub-btn" data-module="travel" data-sub="transport">交通方式</button>
+                <button class="sub-btn" data-module="travel" data-sub="attractions">必去景点</button>
+                <button class="sub-btn" data-module="travel" data-sub="food">特色美食</button>
+                <button class="sub-btn" data-module="travel" data-sub="accommodation">住宿推荐</button>
+                <button class="sub-btn" data-module="travel" data-sub="itinerary">经典行程</button>
+            </div>
+            <div class="sub-contents">
+                <div class="sub-content active" id="travel-time">
+                    <h4>最佳旅游时间 <span class="tibetan-text=yes">ལམ་སྲིད་དམིགས་སྟངས་</span></h4>
+                    
+                    <div class="image-container">
+                        <img src="https://imgtu.com/uploads/s9t5fmes/r-20250917192403_33_33.webp" alt="那曲夏季风光" class="content-image">
+                        <div class="image-caption">那曲夏季草原风光，绿草如茵，鲜花盛开</div>
+                    </div>
+                    
+                    <p>那曲地区由于海拔高、气候寒冷，旅游季节相对较短，最佳旅游时间为每年的6-9月。这一时期，那曲地区气温相对较高，平均气温在10-15℃左右，草原上绿草如茵，鲜花盛开，景色十分美丽。</p>
+                    
+                    <p>6月份，那曲草原刚刚苏醒，野花开始绽放，气温适宜，游客较少，是体验原生态草原风光的好时机。7-8月份是那曲最美的季节，草原上鲜花遍野，气候凉爽宜人，也是参加那曲赛马节的最佳时间。9月份，草原开始泛黄，呈现出另一番壮丽景色，天气晴朗，适合摄影。</p>
+                    
+                    <div class="image-container">
+                        <img src="https://imgtu.com/uploads/s9sk0jlx/r-20250917192349_28_33.webp" alt="那曲冬季风光" class="content-image">
+                        <div class="image-caption">那曲冬季雪景，银装素裹，别有一番风味</div>
+                    </div>
+                    
+                    <p>10月至次年5月为那曲的冬季，气温较低，平均气温在-10℃至-20℃之间，部分地区甚至可达-30℃以下，且多风雪天气，交通不便，旅游风险较大。但对于喜欢冰雪景观和摄影的游客来说，冬季的那曲也别有一番风味，可欣赏到雪原、冰湖等独特景观。</p>
+                </div>
+                <div class="sub-content" id="travel-transport">
+                    <h4>交通方式 <span class="tibetan-text=yes">སྐྱོད་སྟངས་</span></h4>
+                    
+                    <div class="image-container">
+                        <img src="https://ts1.tc.mm.bing.net/th/id/OIP-C.iuWwNV_MoTLPKgGHEKXrOwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" alt="那曲交通概览" class="content-image">
+                        <div class="image-caption">那曲地区的公路交通，蜿蜒的公路穿越草原和山脉</div>
+                    </div>
+                    
+                    <p>那曲地区地理位置偏远，交通相对不便，但随着近年来西藏基础设施建设的不断推进，那曲的交通条件也在逐步改善。目前，前往那曲地区的主要交通方式有公路、铁路和航空。</p>
+                    
+                    <div class="transport-method">
+                        <h5 class="transport-title">✈️ 航空</h5>
+                        <div class="transport-details">
+                            <p>那曲市拥有那曲聂荣机场，该机场于2021年正式通航，是世界上海拔最高的民用机场之一（海拔4436米）。目前开通了至拉萨、成都等城市的航线：</p>
+                            <ul>
+                                <li>那曲-拉萨：每日1-2班，飞行时间约1小时</li>
+                                <li>那曲-成都：每周3班，飞行时间约3.5小时，经停拉萨</li>
+                            </ul>
+                            <p>机场位于聂荣县境内，距离那曲市区约50公里，有机场大巴和出租车往返，车程约1小时。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-method">
+                        <h5 class="transport-title">🚂 铁路</h5>
+                        <div class="transport-details">
+                            <p>青藏铁路穿境而过，那曲火车站是青藏铁路的重要站点之一，位于那曲市色尼区，距离市区约10公里。目前有多个车次经过那曲：</p>
+                            <ul>
+                                <li>拉萨-那曲：每日3-4班，车程约2.5小时</li>
+                                <li>西宁-那曲：每日1班，车程约16小时</li>
+                                <li>格尔木-那曲：每日1班，车程约10小时</li>
+                            </ul>
+                            <p>火车站有公交车和出租车往返市区，车程约20分钟。火车票价相对便宜，且海拔逐渐升高，有助于适应高原环境，是许多游客的首选。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-method">
+                        <h5 class="transport-title">🚗 公路</h5>
+                        <div class="transport-details">
+                            <p>那曲地区的公路交通以那曲镇为中心，主要有青藏公路（109国道）、那昌公路（317国道）等干线公路：</p>
+                            <ul>
+                                <li>拉萨至那曲：全程约326公里，沿青藏公路向北行驶，路况良好，车程约5-6小时，每日有多个班次的长途客车往返。</li>
+                                <li>格尔木至那曲：全程约820公里，沿青藏公路向南行驶，车程约16-18小时，长途客车每日一班。</li>
+                                <li>那曲至昌都：全程约560公里，沿317国道向东行驶，部分路段路况较差，车程约12-14小时。</li>
+                            </ul>
+                            <p>那曲市区内有出租车和公交车，起步价分别为10元和2元。前往周边景点建议包车或参加当地旅行社的旅游团，常用车型有越野车和商务车，价格根据行程和车型有所不同，一般每天800-1500元不等。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-method">
+                        <h5 class="transport-title">🚌 旅游专线</h5>
+                        <div class="transport-details">
+                            <p>旅游旺季（6-9月）那曲市旅游局会开通至主要景区的旅游专线车：</p>
+                            <ul>
+                                <li>那曲镇至纳木错：每日一班，车程约3小时，往返票价约150元</li>
+                                <li>那曲镇至色林错：每周三、六各一班，车程约4小时，往返票价约200元</li>
+                                <li>那曲镇至当惹雍错：每周二、五各一班，车程约6小时，往返票价约300元</li>
+                            </ul>
+                            <p>旅游专线车需提前1-2天在那曲市旅游集散中心或通过旅行社预订。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-content" id="travel-attractions">
+                    <h4>必去景点 <span class="tibetan-text=yes">ལམ་སྲིད་ལྟངས་</span></h4>
+                    
+                    <h5>纳木错 <span class="tibetan-text=yes">གནམ་མཚོ་</span></h5>
+                    <div class="image-container">
+                        <img src="https://ts1.tc.mm.bing.net/th/id/R-C.9770e186a4c234eedd91b4013efcc008?rik=2jg9n6qEcdpuvg&riu=http%3a%2f%2fimage.hnol.net%2fc%2f2020-11%2f01%2f21%2f20201101210344531-4612360.jpg&ehk=Xs10Anz6GxssBtfxZH8T1cUfD3JVa86fiMf%2f%2fjggRRU%3d&risl=&pid=ImgRaw&r=0" alt="纳木错风光" class="content-image">
+                        <div class="image-caption">纳木错湖景，湛蓝的湖水与远处的念青唐古拉山交相辉映</div>
+                    </div>
+                    <p>纳木错是西藏三大圣湖之一，位于那曲市班戈县和拉萨市当雄县交界处，湖面海拔4718米，是世界上海拔最高的咸水湖，也是中国第二大咸水湖。纳木错意为"天湖"，湖水湛蓝如镜，与周围的雪山相映成趣，景色绝美。</p>
+                    <p>主要景点有扎西半岛、迎宾石、合掌石等。每年藏历羊年，会有大批信徒前来转湖朝圣。最佳游览时间为6-9月，门票120元/人。</p>
+                    
+                    <h5 style="margin-top: 30px;">色林错 <span class="tibetan-text=yes">སེ་ལིང་མཚོ་</span></h5>
+                    <div class="image-container">
+                        <img src="https://ts1.tc.mm.bing.net/th/id/OIP-C.73zI2Dvt4eynIadbyrIqnQHaE7?rs=1&pid=ImgDetMain&o=7&rm=3" alt="色林错风光" class="content-image">
+                        <div class="image-caption">色林错，西藏第一大湖泊，也是中国第二大咸水湖</div>
+                    </div>
+                    <p>色林错位于那曲市申扎县和班戈县境内，是西藏第一大湖泊，湖面海拔4530米。色林错周边有多个卫星湖，形成了庞大的湖泊群，是青藏高原上重要的湿地生态系统，也是黑颈鹤、斑头雁等鸟类的栖息地。</p>
+                    <p>色林错风光原始壮丽，游客相对较少，适合摄影和生态旅游。目前尚未收取门票，但需要注意保护当地生态环境。</p>
+                    
+                    <h5 style="margin-top: 30px;">那曲草原 <span class="tibetan-text=yes">ནག་ཆུ་དབང་འབབ་</span></h5>
+                    <div class="image-container">
+                        <img src="https://ts1.tc.mm.bing.net/th/id/OIP-C.X1y8E3k9A5pp_AqureR0XgAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" alt="那曲草原风光" class="content-image">
+                        <div class="image-caption">那曲草原上的牧民帐篷和成群的牦牛</div>
+                    </div>
+                    <p>那曲草原是中国五大草原之一，总面积达40多万平方公里，平均海拔4500米以上，是世界上海拔最高的草原之一。草原上绿草如茵，野花遍野，牛羊成群，构成了一幅美丽的高原画卷。</p>
+                    <p>夏季是游览那曲草原的最佳时节，7-8月的那曲赛马节期间，草原上会举行盛大的庆祝活动，是体验藏北草原文化的绝佳机会。</p>
+                </div>
+                <div class="sub-content" id="travel-food">
+                    <h4>特色美食 <span class="tibetan-text=yes">ཟས་ལྟངས་</span></h4>
+                    
+                    <div class="image-container">
+                        <img src="https://ts1.tc.mm.bing.net/th/id/R-C.0336f6ad50a27a8c59473341cd0454ec?rik=hcjhAAB%2fNDUmhQ&riu=http%3a%2f%2fphotocdn.sohu.com%2f20131115%2fImg390203191.jpg&ehk=ZtQSQLOLhpiA%2bYzrheV38GYKfBCALHIRckV%2fgPWm5pY%3d&risl=&pid=ImgRaw&r=0" alt="酥油茶和糌粑" class="content-image">
+                        <div class="image-caption">那曲传统美食酥油茶和糌粑，是藏族人民的主食</div>
+                    </div>
+                    
+                    <h5>酥油茶 <span class="tibetan-text=yes">ཇ་འཕྲིན་</span></h5>
+                    <p>酥油茶是藏族人民日常生活中不可或缺的饮品，也是那曲地区最具代表性的美食之一。酥油茶以酥油、茶叶、盐为主要原料，经过特殊的制作工艺制成。</p>
+                    <p>酥油茶具有提神醒脑、驱寒保暖、缓解高原反应的功效，是初到高原的游客适应环境的佳品。在那曲的茶馆、餐馆和牧民家中都可以品尝到正宗的酥油茶，价格约5-10元/碗。</p>
+                    
+                    <h5 style="margin-top: 20px;">糌粑 <span class="tibetan-text=yes">རི་བ་</span></h5>
+                    <p>糌粑是藏族人民的主食，由青稞炒熟后磨成粉制成。食用时，将糌粑粉放入碗中，加入酥油茶或清水，用手揉成面团即可食用。糌粑营养丰富，便于携带和保存，是藏族人民适应高原环境的传统食品。</p>
+                    
+                    <div class="image-container" style="margin-top: 20px;">
+                        <img src="https://ts1.tc.mm.bing.net/th/id/OIP-C.ZNTNxmbXLzvRqiAPQz2gFgHaEi?rs=1&pid=ImgDetMain&o=7&rm=3" alt="手抓羊肉" class="content-image">
+                        <div class="image-caption">那曲手抓羊肉，肉质鲜嫩，营养丰富</div>
+                    </div>
+                    
+                    <h5 style="margin-top: 20px;">手抓羊肉 <span class="tibetan-text=yes">གཡག་དཀའ་</span></h5>
+                    <p>那曲地区畜牧业发达，牛羊肉是当地的主要肉食。手抓羊肉是那曲的特色美食，将羊肉煮熟后，用手抓着吃，肉质鲜嫩，营养丰富。那曲的羊肉因生长在高原草原，肉质细嫩，无膻味，深受游客喜爱。</p>
+                    <p>在那曲市区的餐馆中可以品尝到手抓羊肉，价格根据部位不同约80-120元/斤。</p>
+                </div>
+                <div class="sub-content" id="travel-accommodation">
+                    <h4>住宿推荐 <span class="tibetan-text=yes">ཁོར་སྒྲིག་</span></h4>
+                    
+                    <div class="image-container">
+                        <img src="https://ts4.tc.mm.bing.net/th/id/OIP-C.iWsvP0-QDvgWDr9qfZQoBgHaE_?rs=1&pid=ImgDetMain&o=7&rm=3" alt="那曲酒店" class="content-image">
+                        <div class="image-caption">那曲市区的酒店，提供舒适的住宿环境</div>
+                    </div>
+                    
+                    <p>那曲地区的住宿条件相对较为简陋，但随着旅游业的发展，那曲的住宿设施也在不断完善。目前，那曲地区的住宿主要集中在那曲镇，有各类酒店、宾馆和民宿可供选择。</p>
+                    
+                    <h5>高档酒店</h5>
+                    <p>那曲饭店是当地最好的酒店之一，位于那曲镇浙江中路，是一家三星级酒店，设施齐全，提供氧气供应服务，标准间价格约600-800元/晚。</p>
+                    <p>那曲凯斯顿酒店位于那曲镇那曲大厦旁，是一家新建的高档酒店，设施现代化，标准间价格约500-700元/晚。</p>
+                    
+                    <h5 style="margin-top: 20px;">经济型酒店</h5>
+                    <p>那曲吉祥宾馆位于那曲镇辽宁中路，价格实惠，干净整洁，标准间价格约200-300元/晚。</p>
+                    <p>那曲雪域宾馆位于那曲镇文化路，交通便利，提供热水和暖气，标准间价格约150-250元/晚。</p>
+                    
+                    <div class="image-container" style="margin-top: 20px;">
+                        <img src="https://picsum.photos/id/1048/1200/500" alt="草原帐篷" class="content-image">
+                        <div class="image-caption">那曲草原上的帐篷营地，体验牧民生活的好选择</div>
+                    </div>
+                    
+                    <h5 style="margin-top: 20px;">特色住宿</h5>
+                    <p>对于想体验藏族风情的游客，可以选择入住草原上的牧民帐篷，一般提供简单的食宿服务，价格约100-150元/人/晚。</p>
+                    <p>旅游旺季（6-9月）那曲部分景区周边会设立帐篷营地，提供更舒适的住宿条件，价格约300-500元/顶/晚，适合家庭或小团体入住。</p>
+                    <p>建议提前预订住宿，尤其是在旅游旺季和赛马节期间，住宿较为紧张。</p>
+                </div>
+                <div class="sub-content" id="travel-itinerary">
+                    <h4>经典行程 <span class="tibetan-text=yes">ལམ་སྲིད་ལམ་</span></h4>
+                    
+                    <div class="image-container">
+                        <img src="https://imgtu.com/uploads/sa1w7gc3/r-20250918194823_4_70.webp" alt="那曲旅游路线" class="content-image">
+                        <div class="image-caption">那曲旅游路线示意图，涵盖主要景点</div>
+                    </div>
+                    
+                    <h5>那曲5日精华游</h5>
+                    <p><strong>Day 1：拉萨-纳木错</strong></p>
+                    <p>从拉萨出发，沿青藏公路向北行驶，约3小时后抵达纳木错。游览扎西半岛，欣赏纳木错湖景和念青唐古拉山风光。晚上住在纳木错附近的民宿或返回当雄县住宿。</p>
+                    
+                    <p><strong>Day 2：纳木错-那曲镇</strong></p>
+                    <p>清晨欣赏纳木错日出，之后前往那曲镇，途中欣赏藏北草原风光。抵达那曲镇后入住酒店，休息适应高原环境。下午可以参观那曲镇周边的草原和寺庙。</p>
+                    
+                    <p><strong>Day 3：那曲镇-色林错</strong></p>
+                    <p>从那曲镇出发，前往色林错，车程约4小时。游览色林错及其周边的湖泊群，欣赏高原湖泊风光和野生动物。晚上返回那曲镇住宿。</p>
+                    
+                    <p><strong>Day 4：那曲镇-草原一日游</strong></p>
+                    <p>参加那曲草原一日游，体验藏族牧民生活，可进行骑马、射箭等活动，品尝正宗的藏家美食。如果恰逢赛马节期间，可以观看精彩的赛马活动。</p>
+                    
+                    <p><strong>Day 5：那曲镇-拉萨</strong></p>
+                    <p>从那曲镇返回拉萨，车程约5-6小时，结束愉快的那曲之旅。</p>
+                    
+                    <div class="image-container" style="margin-top: 20px;">
+                        <img src="https://ts1.tc.mm.bing.net/th/id/R-C.81f86868cec57e6dd3b63b279ce9049a?rik=vSL2KZzmLFQ63g&riu=http%3a%2f%2fyz.zjol.com.cn%2fzjnq%2f201907%2fW020190704323273980233.jpg&ehk=SqYktvkx%2f80Ivjz%2bTyyLKAdwGw15t3odCXtZ0SXqbxw%3d&risl=&pid=ImgRaw&r=0" alt="那曲深度游" class="content-image">
+                        <div class="image-caption">那曲深度游可探索更多偏远地区的原始风光</div>
+                    </div>
+                    
+                    <h5 style="margin-top: 20px;">那曲7日深度游</h5>
+                    <p>在5日精华游的基础上，增加两天时间前往尼玛县和当惹雍错，探索更偏远、更原始的藏北风光。当惹雍错是西藏最古老的雍仲本教圣地，景色壮丽，游客较少，适合深度游爱好者。</p>
+                    
+                    <p><strong>注意事项：</strong>那曲地区海拔较高，行程不宜安排过紧，应留有充足的休息时间。部分偏远地区住宿条件简陋，需做好心理准备。建议选择正规旅行社的旅游团或包车前往，确保安全。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 注意事项模块 -->
+        <div class="module-content" id="noticeModule">
+            <h3 class="content-title">那曲旅游注意事项 <span class="tibetan-text" data-tibetan="ནག་ཆུ་ལམ་སྲིད་དགོས་ཡིན་">ནག་ཆུ་ལམ་སྲིད་དགོས་ཡིན་</span></h3>
+            <div class="sub-buttons">
+                <button class="sub-btn active" data-module="notice" data-sub="altitude">高原反应预防</button>
+                <button class="sub-btn" data-module="notice" data-sub="religion">宗教礼仪</button>
+                <button class="sub-btn" data-module="notice" data-sub="environment">环境保护</button>
+                <button class="sub-btn" data-module="notice" data-sub="safety">安全提示</button>
+                <button class="sub-btn" data-module="notice" data-sub="custom">习俗禁忌</button>
+            </div>
+            <div class="sub-contents">
+                <div class="sub-content active" id="notice-altitude">
+                    <h4>高原反应预防 <span class="tibetan-text=yes">མཐོང་སྐྱེད་སྲིད་</span></h4>
+                    <p>那曲地区平均海拔4500米以上，属于高海拔地区，游客前往那曲旅游时，容易出现高原反应。提前适应、保持良好心态、合理饮食都是预防高原反应的重要措施。</p>
+                </div>
+                <div class="sub-content" id="notice-religion">
+                    <h4>宗教礼仪 <span class="tibetan-text=yes">ཆོས་ལུགས་</span></h4>
+                    <p>那曲地区大多数藏族群众信仰藏传佛教，宗教在当地人民的生活中占有重要地位。游客应尊重当地的宗教信仰和宗教礼仪。</p>
+                </div>
+                <div class="sub-content" id="notice-environment">
+                    <h4>环境保护 <span class="tibetan-text=yes་">རིགས་སྲིད་</span></h4>
+                    <p>那曲地区拥有壮丽的高原自然风光和独特的生态环境，是青藏高原生态系统的重要组成部分。游客应增强环境保护意识，自觉遵守环境保护相关规定。</p>
+                </div>
+                <div class="sub-content" id="notice-safety">
+                    <h4>安全提示 <span class="tibetan-text=yes">ཁམས་སྲིད་</span></h4>
+                    <p>那曲地区地理位置偏远，自然环境复杂，气候条件恶劣，游客前往那曲旅游时，应注意自身安全，做好安全防范措施。</p>
+                </div>
+                <div class="sub-content" id="notice-custom">
+                    <h4>习俗禁忌 <span class="tibetan-text=yes">ལུགས་དགོས་</span></h4>
+                    <p>那曲地区的藏族人民在长期的生产生活中形成了独特的风俗习惯和禁忌，游客应尊重当地的习俗禁忌。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 论坛模块 -->
+    <div class="forum-container" id="forumContainer">
+        <button class="forum-toggle" id="forumToggle">←</button>
+        <div class="forum-header">
+            <h3 class="forum-title">那曲旅游贴吧</h3>
+            <p class="forum-subtitle">分享您的那曲之旅体验</p>
+        </div>
+        
+        <!-- 权限提示（默认隐藏） -->
+        <div class="forum-permission" id="forumPermission">
+            <i>📝</i>
+            <h4>请使用手机号登录以发表评论</h4>
+            <p>只有手机号登录用户可以分享旅游感想</p>
+        </div>
+        
+        <!-- 论坛内容（默认隐藏） -->
+        <div class="forum-content" id="forumPosts">
+            <div class="forum-posts" id="postsContainer">
+                <!-- 帖子会通过JS动态添加 -->
+                <div class="post-item">
+                    <div class="post-header">
+                        <span class="post-author">旅行者小明</span>
+                        <span class="post-time">2023-08-15</span>
+                    </div>
+                    <div class="post-content">
+                        那曲的风景真的太美了！纳木错的湖水清澈见底，天空湛蓝如洗，让人仿佛置身仙境。强烈推荐大家6-8月去，草原上的花开得正好。
+                    </div>
+                </div>
+                <div class="post-item">
+                    <div class="post-header">
+                        <span class="post-author">背包客小雅</span>
+                        <span class="post-time">2023-07-22</span>
+                    </div>
+                    <div class="post-content">
+                        第一次去那曲有点高原反应，建议大家提前做好准备，不要剧烈运动。当地的酥油茶很正宗，能有效缓解高原反应。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 发帖表单（默认隐藏） -->
+        <div class="forum-form" id="forumForm">
+            <h4>分享您的那曲之旅</h4>
+            <textarea class="forum-textarea" id="postContent" placeholder="请输入您的旅游感想..."></textarea>
+            <button class="forum-submit" id="submitPost">发表</button>
+        </div>
+    </div>
+
+    <script>
+        // 登录相关功能
+        const loginContainer = document.getElementById('loginContainer');
+        const mainContent = document.getElementById('mainContent');
+        const getCodeBtn = document.getElementById('getCodeBtn');
+        const phoneNumberInput = document.getElementById('phoneNumber');
+        const verifyCodeInput = document.getElementById('verifyCode');
+        const phoneLoginBtn = document.getElementById('phoneLoginBtn');
+        const touristLoginBtn = document.getElementById('touristLoginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        // 论坛相关元素
+        const forumContainer = document.getElementById('forumContainer');
+        const forumToggle = document.getElementById('forumToggle');
+        const forumPermission = document.getElementById('forumPermission');
+        const forumPosts = document.getElementById('forumPosts');
+        const forumForm = document.getElementById('forumForm');
+        const postContent = document.getElementById('postContent');
+        const submitPost = document.getElementById('submitPost');
+        const postsContainer = document.getElementById('postsContainer');
+
+        // 验证码功能
+        getCodeBtn.addEventListener('click', () => {
+            const phoneNumber = phoneNumberInput.value.trim();
+            if (!/^1[3-9]\d{9}$/.test(phoneNumber)) {
+                alert('请输入正确的手机号');
+                return;
+            }
+            // 生成随机6位验证码
+            const code = Math.floor(Math.random() * 900000) + 100000;
+            alert(`您的验证码是：${code}`);
+            // 倒计时60秒
+            let count = 60;
+            getCodeBtn.disabled = true;
+            getCodeBtn.textContent = `重新获取(${count}s)`;
+            const timer = setInterval(() => {
+                count--;
+                getCodeBtn.textContent = `重新获取(${count}s)`;
+                if (count <= 0) {
+                    clearInterval(timer);
+                    getCodeBtn.disabled = false;
+                    getCodeBtn.textContent = '获取验证码';
+                }
+            }, 1000);
+            // 存储验证码和手机号到localStorage
+            localStorage.setItem('verifyCode', code);
+            localStorage.setItem('userPhone', phoneNumber);
+        });
+
+        // 手机号登录
+        phoneLoginBtn.addEventListener('click', () => {
+            const phoneNumber = phoneNumberInput.value.trim();
+            const verifyCode = verifyCodeInput.value.trim();
+            const storedCode = localStorage.getItem('verifyCode');
+            
+            if (!/^1[3-9]\d{9}$/.test(phoneNumber)) {
+                alert('请输入正确的手机号');
+                return;
+            }
+            
+            if (!verifyCode) {
+                alert('请输入验证码');
+                return;
+            }
+            
+            if (!storedCode) {
+                alert('请先获取验证码');
+                return;
+            }
+            
+            if (verifyCode !== storedCode.toString()) {
+                alert('验证码不正确');
+                return;
+            }
+            
+            // 记录登录方式为手机号登录
+            localStorage.setItem('loginType', 'phone');
+            // 登录成功
+            loginSuccess();
+        });
+
+        // 游客登录
+        touristLoginBtn.addEventListener('click', () => {
+            // 记录登录方式为游客登录
+            localStorage.setItem('loginType', 'tourist');
+            // 游客可以访问全部内容，但不能使用论坛
+            loginSuccess();
+        });
+
+        // 退出登录功能
+        logoutBtn.addEventListener('click', () => {
+            if (confirm('确定要退出登录吗？')) {
+                // 清除登录状态
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('verifyCode');
+                localStorage.removeItem('loginType');
+                localStorage.removeItem('userPhone');
+                
+                // 重置登录表单
+                phoneNumberInput.value = '';
+                verifyCodeInput.value = '';
+                
+                // 隐藏主内容，显示登录界面
+                mainContent.style.display = 'none';
+                loginContainer.style.display = 'flex';
+                loginContainer.style.opacity = '1';
+                
+                // 关闭论坛
+                forumContainer.classList.remove('active');
+                forumToggle.textContent = '←';
+                
+                alert('已成功退出登录');
+            }
+        });
+
+        // 登录成功处理函数
+        function loginSuccess() {
+            // 添加淡出动画
+            loginContainer.style.opacity = '0';
+            setTimeout(() => {
+                loginContainer.style.display = 'none';
+                mainContent.style.display = 'block';
+                // 记录登录状态
+                localStorage.setItem('isLoggedIn', 'true');
+                
+                // 检查登录类型并设置论坛权限
+                checkForumPermission();
+                
+                alert('登录成功，欢迎来到那曲旅游指南！');
+            }, 500);
+        }
+
+        // 检查论坛权限
+        function checkForumPermission() {
+            const loginType = localStorage.getItem('loginType');
+            
+            if (loginType === 'phone') {
+                // 手机号登录，显示论坛内容和发帖功能
+                forumPermission.style.display = 'none';
+                forumPosts.style.display = 'block';
+                forumForm.style.display = 'block';
+            } else {
+                // 游客登录或未登录，显示权限提示
+                forumPermission.style.display = 'flex';
+                forumPosts.style.display = 'none';
+                forumForm.style.display = 'none';
+            }
+        }
+
+        // 论坛展开/收起功能
+        forumToggle.addEventListener('click', () => {
+            // 检查是否已登录
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            
+            if (!isLoggedIn) {
+                alert('请先登录以访问论坛');
+                return;
+            }
+            
+            // 切换论坛显示状态
+            forumContainer.classList.toggle('active');
+            
+            // 切换箭头方向
+            if (forumContainer.classList.contains('active')) {
+                forumToggle.textContent = '→';
+                forumToggle.classList.add('active');
+            } else {
+                forumToggle.textContent = '←';
+                forumToggle.classList.remove('active');
+            }
+            
+            // 检查权限
+            checkForumPermission();
+        });
+
+        // 发表帖子功能
+        submitPost.addEventListener('click', () => {
+            const content = postContent.value.trim();
+            if (!content) {
+                alert('请输入内容后再发表');
+                return;
+            }
+            
+            // 获取当前用户（手机号登录的用户）
+            const userPhone = localStorage.getItem('userPhone');
+            const userName = `用户${userPhone ? userPhone.substr(-4) : '游客'}`; // 显示手机号后四位
+            
+            // 获取当前时间
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
+            
+            // 创建新帖子元素
+            const postItem = document.createElement('div');
+            postItem.className = 'post-item';
+            postItem.innerHTML = `
+                <div class="post-header">
+                    <span class="post-author">${userName}</span>
+                    <span class="post-time">${dateStr}</span>
+                </div>
+                <div class="post-content">
+                    ${content}
+                </div>
+            `;
+            
+            // 添加到帖子容器最前面
+            postsContainer.insertBefore(postItem, postsContainer.firstChild);
+            
+            // 清空输入框
+            postContent.value = '';
+            
+            // 添加动画效果
+            postItem.style.opacity = '0';
+            postItem.style.transform = 'translateY(20px)';
+            postItem.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            
+            setTimeout(() => {
+                postItem.style.opacity = '1';
+                postItem.style.transform = 'translateY(0)';
+            }, 10);
+            
+            alert('发表成功！');
+        });
+
+        // 模块切换功能
+        const moduleBtns = document.querySelectorAll('.module-btn');
+        moduleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const module = btn.getAttribute('data-module');
+                
+                // 切换模块显示
+                document.querySelectorAll('.module-content').forEach(el => {
+                    el.classList.remove('active');
+                });
+                document.getElementById(`${module}Module`).classList.add('active');
+                
+                // 切换按钮激活状态
+                moduleBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 显示该模块的第一个子内容
+                const firstSubBtn = document.querySelector(`.sub-btn[data-module="${module}"]`);
+                if (firstSubBtn) {
+                    firstSubBtn.click();
+                }
+            });
+        });
+
+        // 子内容切换功能
+        const subBtns = document.querySelectorAll('.sub-btn');
+        subBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const module = btn.getAttribute('data-module');
+                const sub = btn.getAttribute('data-sub');
+                
+                // 切换子内容显示
+                document.querySelectorAll(`#${module}Module .sub-content`).forEach(el => {
+                    el.classList.remove('active');
+                });
+                document.getElementById(`${module}-${sub}`).classList.add('active');
+                
+                // 切换子按钮激活状态
+                document.querySelectorAll(`.sub-btn[data-module="${module}"]`).forEach(b => {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+            });
+        });
+
+        // 藏文文本点击朗读功能
+        function speakTibetan(text) {
+            // 停止任何正在进行的语音
+            window.speechSynthesis.cancel();
+            
+            // 创建语音实例
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // 尝试设置藏语语音，如果没有找到则使用默认语音
+            const voices = window.speechSynthesis.getVoices();
+            const tibetanVoice = voices.find(voice => 
+                voice.lang.includes('bo') || 
+                voice.lang.includes('tibetan') ||
+                voice.lang.includes('zh-CN')
+            );
+            
+            if (tibetanVoice) {
+                utterance.voice = tibetanVoice;
+            }
+            
+            // 设置语音属性
+            utterance.lang = 'bo-CN'; // 藏语代码
+            utterance.rate = 0.9; // 语速稍慢，便于理解
+            utterance.pitch = 1; // 音调
+            utterance.volume = 1; // 音量
+            
+            // 播放语音
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // 为所有藏文文本添加点击事件
+        const tibetanTexts = document.querySelectorAll('.tibetan-text');
+        tibetanTexts.forEach(text => {
+            text.addEventListener('click', () => {
+                const tibetan = text.getAttribute('data-tibetan');
+                
+                // 检查浏览器是否支持语音合成
+                if ('speechSynthesis' in window) {
+                    // 高亮显示正在朗读的文本
+                    text.style.backgroundColor = 'rgba(155, 89, 182, 0.2)';
+                    
+                    speakTibetan(tibetan);
+                    
+                    // 朗读结束后移除高亮
+                    setTimeout(() => {
+                        text.style.backgroundColor = '';
+                    }, tibetan.length * 200); // 根据文本长度估计时间
+                } else {
+                    alert('抱歉，您的浏览器不支持文本朗读功能');
+                }
+            });
+        });
+
+        // 页面加载时检查登录状态
+        window.addEventListener('load', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn) {
+                loginContainer.style.display = 'none';
+                mainContent.style.display = 'block';
+                checkForumPermission();
+            }
+            
+            // 预加载语音合成引擎
+            window.speechSynthesis.getVoices();
+        });
+    </script>
+</body>
+</html>
+    
